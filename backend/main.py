@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -11,6 +11,20 @@ def main():
 @app.route('/love/<name>')
 def love(name):
   return f'I love you {name}'
+
+@app.route('/api/data', methods=['POST'])
+def receive_data():
+  data = request.get_json()
+  gmail = data.get('gmail')
+  password = data.get('password')
+
+  return jsonify({
+    'status': 'ok',
+    'received': {
+      'gmail': gmail,
+      'passwrord': password
+    }
+  })
 
 if __name__ == '__main__':
   app.run(port=5000, debug=True)

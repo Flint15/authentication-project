@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from database import insert_data
+import hashlib
 
 app = Flask(__name__)
 CORS(app)
@@ -19,14 +20,15 @@ def receive_data():
   gmail = data.get('gmail')
   password = data.get('password')
 
-  response: str = insert_data(gmail, password)
+  hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
+  response: str = insert_data(gmail, hashed_password)
 
   return jsonify({
     'status': 'ok',
     'response': response,
     'data': {
-      'gmail': gmail,
-      'password': password
+      'gmail': gmail
     }
   })
 

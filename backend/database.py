@@ -1,16 +1,24 @@
 import sqlite3
 
 conn = sqlite3.connect('database.db')
-
 cursor = conn.cursor()
 
-cursor.execute('''
+cursor.execute("""
   CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT UNIQUE,
-    password TEXT NOT NULL
-  )      
-''')
+                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                 gmail TEXT,
+                 password TEXT)  
+""")
 conn.commit()
-cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)",
-               ('blue@example.com', 'veryhardohayopassword'))
+conn.close()
+
+def insert_data(gmail: str, password: str):
+  with sqlite3.connect('database.db') as conn:
+    cursor = conn.cursor()
+    cursor.execute(
+      'INSERT INTO users (gmail, password) VALUES (?, ?)',
+      (gmail, password)
+    )
+    conn.commit()
+  
+  return 'Data were saved succesfully :) '

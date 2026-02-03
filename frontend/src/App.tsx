@@ -1,12 +1,13 @@
 import { useState } from "react";
+import Form from "./components/Form";
 
 export default function App() {
   const [gmail, setGmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const sendRequest = async (): Promise<void> => {
+  const register = async (): Promise<void> => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/data", {
+      const response = await fetch("http://127.0.0.1:5000/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -25,27 +26,9 @@ export default function App() {
 
   return (
     <div className="main">
-      <form>
-        <label htmlFor="gmail">Gmail:</label>
-        <input
-          type="text"
-          id="gmail"
-          onChange={(e) => {
-            setGmail(e.target.value);
-          }}
-        />
-        <br />
-        <label htmlFor="password">Password</label>
-        <input
-          type="text"
-          id="password"
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-      </form>
-      <button className="request-button" onClick={sendRequest}>
-        Send request
+      <Form setGmail={setGmail} setPassword={setPassword} />
+      <button className="register-button" onClick={register}>
+        register
       </button>
     </div>
   );

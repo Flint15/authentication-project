@@ -4,6 +4,7 @@ import Form from "./components/Form";
 export default function App() {
   const [gmail, setGmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [signIn, setSignIn] = useState<boolean>(true);
 
   const register = async (): Promise<void> => {
     try {
@@ -26,9 +27,27 @@ export default function App() {
 
   return (
     <div className="main">
+      <div className="login-buttons">
+        <button
+          className="sign-in"
+          onClick={() => {
+            setSignIn(true);
+          }}
+        >
+          sign-in
+        </button>
+        <button
+          className="sign-up"
+          onClick={() => {
+            setSignIn(false);
+          }}
+        >
+          sign-up
+        </button>
+      </div>
       <Form setGmail={setGmail} setPassword={setPassword} />
       <button className="register-button" onClick={register}>
-        register
+        {signIn ? "Sign In" : "Sign Up"}
       </button>
     </div>
   );

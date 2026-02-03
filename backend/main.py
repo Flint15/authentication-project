@@ -14,7 +14,7 @@ def main():
 def love(name):
   return f'I love you {name}'
 
-@app.route('/api/data', methods=['POST'])
+@app.route('/register', methods=['POST'])
 def receive_data():
   data = request.get_json()
   gmail = data.get('gmail')

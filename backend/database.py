@@ -1,4 +1,10 @@
 import sqlite3
+from typing import Optional, TypedDict
+
+class User(TypedDict):
+  name: str
+  gmail: str
+  password: bytes
 
 conn = sqlite3.connect('database.db')
 cursor = conn.cursor()
@@ -11,7 +17,7 @@ cursor.execute("""
                  id INTEGER PRIMARY KEY AUTOINCREMENT,
                  name TEXT,
                  gmail TEXT,
-                 password TEXT)  
+                 password BLOB)  
 """)
 #drop_users()
 conn.commit()
@@ -28,13 +34,13 @@ def insert_data(name: str, gmail: str, password: bytes):
   
   return 'Data were saved succesfully :) '
 
-def retrive_data(gmail: str, password: str):
+def retrive_data(gmail: str) -> Optional[User]:
   with sqlite3.connect('database.db') as conn:
     cursor = conn.cursor()
-    cursor.execute('SELECT name, gmail FROM users WHERE gmail = ?',
+    cursor.execute('SELECT name, gmail, password FROM users WHERE gmail = ?',
                    (gmail,))
-    user = cursor.fetchone()
-    if user:
-      return f'User was found: {user}'
-    else:
-      return 'No user with that email'
+    row: tuple = cursor.fetchone()
+    if row:
+      name, gmail, password = row
+      return {'name': name, 'gmail': gmail, 'password': password}
+    return None

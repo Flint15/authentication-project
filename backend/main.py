@@ -34,18 +34,40 @@ def register():
     }
   })
 
+def verify_password(input_password: str, stored_hash: bytes) -> bool:
+  print(input_password, stored_hash, type(stored_hash))
+  return bcrypt.checkpw(input_password.encode(), stored_hash)
+
 @app.route('/login', methods=['POST'])
 def login():
   data = request.get_json()
   gmail = data.get('gmail')
   password = data.get('password')
 
-  response = retrive_data(gmail, password)
+  user = retrive_data(gmail)
+  if user is None:
+    return jsonify({
+      'status': 'not ok',
+      'response': None
+    }), 401
+
+  stored_password: bytes = user['password']
+  verification: bool = verify_password(password, stored_password)
+
+  if verification:
+    return jsonify({
+      'status': 'ok',
+      'response': 'User was found',
+      'data': {
+        'name': user['name'],
+        'gmail': user['gmail']
+      }
+    })
 
   return jsonify({
-    'status': 'ok',
-    'response': response
-  })
+    'status': 'not ok',
+    'response': 'User with that gmail does not exist'
+  }), 401
 
 if __name__ == '__main__':
   app.run(port=5000, debug=True)

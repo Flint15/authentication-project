@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from database import insert_data, retrive_data
-import hashlib
+import bcrypt
 
 app = Flask(__name__)
 CORS(app)
@@ -21,7 +21,7 @@ def register():
   gmail = data.get('gmail')
   password = data.get('password')
 
-  hashed_password = hashlib.sha256(password.encode()).hexdigest()
+  hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
   response: str = insert_data(name, gmail, hashed_password)
 

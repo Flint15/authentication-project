@@ -3,6 +3,9 @@ import sqlite3
 conn = sqlite3.connect('database.db')
 cursor = conn.cursor()
 
+def drop_users():
+  cursor.execute('DROP TABLE users')
+
 cursor.execute("""
   CREATE TABLE IF NOT EXISTS users (
                  id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -10,10 +13,11 @@ cursor.execute("""
                  gmail TEXT,
                  password TEXT)  
 """)
+#drop_users()
 conn.commit()
 conn.close()
 
-def insert_data(name: str, gmail: str, password: str):
+def insert_data(name: str, gmail: str, password: bytes):
   with sqlite3.connect('database.db') as conn:
     cursor = conn.cursor()
     cursor.execute(

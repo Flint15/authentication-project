@@ -9,16 +9,16 @@ export default function App() {
 
   const register = async (): Promise<void> => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `http://127.0.0.1:5000/${signIn ? "login" : "register"}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...(!signIn && { name }), gmail, password }),
         },
-        body: JSON.stringify({
-          gmail: gmail,
-          password: password,
-        }),
-      });
+      );
       const result = await response.json();
       console.log(result);
     } catch (error) {

@@ -4,6 +4,7 @@ import Form from "./components/Form";
 export default function App() {
   const [gmail, setGmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [name, setName] = useState<string>("");
   const [signIn, setSignIn] = useState<boolean>(true);
 
   const register = async (): Promise<void> => {
@@ -45,7 +46,12 @@ export default function App() {
           sign-up
         </button>
       </div>
-      <Form setGmail={setGmail} setPassword={setPassword} />
+      <Form
+        signIn={signIn}
+        setName={setName}
+        setGmail={setGmail}
+        setPassword={setPassword}
+      />
       <button className="register-button" onClick={register}>
         {signIn ? "Sign In" : "Sign Up"}
       </button>

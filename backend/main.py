@@ -17,12 +17,13 @@ def love(name):
 @app.route('/register', methods=['POST'])
 def receive_data():
   data = request.get_json()
+  name = data.get('name')
   gmail = data.get('gmail')
   password = data.get('password')
 
   hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
-  response: str = insert_data(gmail, hashed_password)
+  response: str = insert_data(name, gmail, hashed_password)
 
   return jsonify({
     'status': 'ok',

@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from database import insert_data
+from database import insert_data, retrive_data
 import hashlib
 
 app = Flask(__name__)
@@ -15,7 +15,7 @@ def love(name):
   return f'I love you {name}'
 
 @app.route('/register', methods=['POST'])
-def receive_data():
+def register():
   data = request.get_json()
   name = data.get('name')
   gmail = data.get('gmail')
@@ -29,8 +29,22 @@ def receive_data():
     'status': 'ok',
     'response': response,
     'data': {
+      'name': name,
       'gmail': gmail
     }
+  })
+
+@app.route('/login', methods=['POST'])
+def login():
+  data = request.get_json()
+  gmail = data.get('gmail')
+  password = data.get('password')
+
+  response = retrive_data(gmail, password)
+
+  return jsonify({
+    'status': 'ok',
+    'response': response
   })
 
 if __name__ == '__main__':

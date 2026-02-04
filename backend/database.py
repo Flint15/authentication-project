@@ -23,3 +23,14 @@ def insert_data(name: str, gmail: str, password: str):
     conn.commit()
   
   return 'Data were saved succesfully :) '
+
+def retrive_data(gmail: str, password: str):
+  with sqlite3.connect('database.db') as conn:
+    cursor = conn.cursor()
+    cursor.execute('SELECT name, gmail FROM users WHERE gmail = ?',
+                   (gmail,))
+    user = cursor.fetchone()
+    if user:
+      return f'User was found: {user}'
+    else:
+      return 'No user with that email'

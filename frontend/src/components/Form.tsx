@@ -20,7 +20,7 @@ export default function Form({
       <br />
       <label htmlFor="password">Password</label>
       <input
-        type="text"
+        type="password"
         id="password"
         onChange={(e) => {
           setPassword(e.target.value);

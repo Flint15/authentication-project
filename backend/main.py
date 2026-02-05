@@ -35,7 +35,6 @@ def register():
   })
 
 def verify_password(input_password: str, stored_hash: bytes) -> bool:
-  print(input_password, stored_hash, type(stored_hash))
   return bcrypt.checkpw(input_password.encode(), stored_hash)
 
 @app.route('/login', methods=['POST'])

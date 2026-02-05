@@ -18,8 +18,8 @@ export default function Form({
           <label htmlFor="name">Name:</label>
           <input
             type="text"
-            id="gmail"
-            onChange={(e) => {
+            id="name"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setName(e.target.value);
             }}
           />
@@ -30,7 +30,7 @@ export default function Form({
       <input
         type="text"
         id="gmail"
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setGmail(e.target.value);
         }}
       />
@@ -39,7 +39,7 @@ export default function Form({
       <input
         type="password"
         id="password"
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setPassword(e.target.value);
         }}
       />

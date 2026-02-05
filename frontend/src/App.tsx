@@ -8,6 +8,7 @@ export default function App() {
   const [signIn, setSignIn] = useState<boolean>(true);
 
   const register = async (): Promise<void> => {
+    if (!gmail || password) return;
     try {
       const response = await fetch(
         `http://127.0.0.1:5000/${signIn ? "login" : "register"}`,
